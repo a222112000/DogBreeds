@@ -8,9 +8,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -52,34 +51,36 @@ fun BreedsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(1),
-                        content = {
-                            state.breeds?.message?.let { breeds ->
-                                items(breeds) {
+                    state.breeds?.let {
+                        LazyColumn(
+                            content = {
+
+                                items(it) {
+
                                     BreedsItem(
                                         breed = it,
-                                        imageUrl = it,
+                                        imageUrl = it.imageUrl,
                                         navController = navigation
                                     )
                                 }
-                            }
 
-                        }, contentPadding = PaddingValues(16.dp)
-                    )
-                    if (viewModel.breeds.value.error.isNotBlank()) {
-                        Text(
-                            text = viewModel.breeds.value.error,
-                            color = MaterialTheme.colorScheme.error,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp)
-                                .align(Alignment.Center)
+                            }, contentPadding = PaddingValues(16.dp)
                         )
-                    }
-                    if (viewModel.breeds.value.isLoading) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        if (state.error.isNotEmpty()) {
+                            Text(
+                                text = viewModel.breeds.value.error,
+                                color = MaterialTheme.colorScheme.error,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 20.dp)
+
+                            )
+                        }
+                        if (state.isLoading) {
+                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        }
+
                     }
                 }
             }
