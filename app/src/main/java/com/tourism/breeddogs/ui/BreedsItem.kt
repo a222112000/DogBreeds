@@ -37,11 +37,13 @@ fun BreedsItem(
         Card(modifier = Modifier.fillMaxWidth()) {
             breed.let {
 
-                Column(modifier = Modifier.fillMaxSize(),
+                Column(modifier = Modifier.fillMaxSize().clickable {
+                    navController.navigate(Screen.DogDetails.route+"/"+it.name)
+                },
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(text = it.name, modifier = Modifier.padding(8.dp).clickable {
-                        navController.navigate(Screen.DogDetails.route+"/"+it.name) }, fontSize = 18.sp,
+                         }, fontSize = 18.sp,
                         fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
                 }
             }
