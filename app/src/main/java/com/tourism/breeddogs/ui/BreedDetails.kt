@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 
@@ -36,7 +37,7 @@ fun BreedDetails(imageUrl: String?,navigation: NavController,viewModel: BreedsVi
     val state = viewModel.breedImages.value
     Scaffold(
         topBar = {
-            TopBar(navigation)
+            TopBar(navigation, imageUrl)
         }
     ) {
         Column(

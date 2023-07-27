@@ -27,12 +27,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import com.tourism.breeddogs.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(navController: NavController) {
+fun TopBar(navController: NavController, title: String? = null) {
     TopAppBar(
         title = {
             Row(horizontalArrangement = Arrangement.SpaceBetween) {
@@ -58,10 +59,12 @@ fun TopBar(navController: NavController) {
                         text = if(navController.currentDestination?.route == "breeds_screen"){
                                    "List Of Breeds"
                                } else {
-                            "Selected Breed"
+                            "Selected Breed ${if(title != null){
+                                title
+                            }else{ ""} }"
                         },
                         modifier = Modifier.padding(top = 6.dp, end = 8.dp).fillMaxWidth(),
-                        style = TextStyle(color = Color.Black, fontSize = 27.sp),
+                        style = TextStyle(color = Color.Black, fontSize = 19.sp),
                         textAlign = TextAlign.Start,
                     )
                 }
