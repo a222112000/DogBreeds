@@ -33,7 +33,7 @@ import com.tourism.breeddogs.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(navController: NavController, title: String? = null) {
+fun TopBar(navController: NavController, title: String? = null,count: Int? = null) {
     TopAppBar(
         title = {
             Row(horizontalArrangement = Arrangement.SpaceBetween) {
@@ -60,7 +60,7 @@ fun TopBar(navController: NavController, title: String? = null) {
                                    "List Of Breeds"
                                } else {
                             "Selected Breed ${if(title != null){
-                                title
+                                "$title ($count) Photos"
                             }else{ ""} }"
                         },
                         modifier = Modifier.padding(top = 6.dp, end = 8.dp).fillMaxWidth(),
