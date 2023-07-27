@@ -32,12 +32,16 @@ import coil.compose.AsyncImage
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BreedDetails(imageUrl: String?,navigation: NavController,viewModel: BreedsViewModel = hiltViewModel()) {
+fun BreedDetails(imageUrl: String?,
+                 navigation: NavController,
+                 viewModel: BreedsViewModel = hiltViewModel(),
+                 count: Int? = null
+) {
 
     val state = viewModel.breedImages.value
     Scaffold(
         topBar = {
-            TopBar(navigation, imageUrl)
+            TopBar(navigation, imageUrl, count = state.breeds?.size)
         }
     ) {
         Column(
