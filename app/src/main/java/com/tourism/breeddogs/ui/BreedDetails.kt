@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -23,11 +24,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
+import com.tourism.breeddogs.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -54,7 +61,7 @@ fun BreedDetails(imageUrl: String?,
                     LazyColumn(modifier = Modifier.padding(top = 74.dp)) {
                         items(it) {
                             AsyncImage(
-                                contentDescription = null,
+                                contentDescription = state.breeds!!.indexOf(it).toString(),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(color = MaterialTheme.colorScheme.onPrimaryContainer)
@@ -68,8 +75,20 @@ fun BreedDetails(imageUrl: String?,
                                     .clip(RoundedCornerShape(topEnd = 1.dp, topStart = 1.dp)),
                                 contentScale = ContentScale.FillWidth,
                                 model =
-                                it,
+                                ImageRequest.Builder(LocalContext.current)
+                                    .data(it)
+                                    .crossfade(true)
+                                    .build(),
+                                placeholder = painterResource(R.drawable.baseline_logo_dev_24),
                             )
+                            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                                Text(
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .align(Alignment.CenterHorizontally),
+                                    text = state.breeds!!.indexOf(it).plus(1).toString(),
+                                )
+                            }
                         }
                     }
                 }
